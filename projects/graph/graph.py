@@ -112,13 +112,39 @@ class Graph:
         visited = set()
         self.helper_function(starting_vertex, visited)
 
-    def bfs(self, starting_vertex, destination_vertex):
+    def bfs(self, starting_vertex_id, destination_vertex_id):
         """
         Return a list containing the shortest path from
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        q = Queue()
+        q.enqueue(starting_vertex_id)
+
+        # Keep track of visited nodes
+        visited = set()
+
+        if starting_vertex_id is destination_vertex_id:
+            return starting_vertex_id
+
+        # Repeat until queue is empty
+        while q.size() > 0:
+            # Dequeue first vert
+            path = [q.dequeue()]
+            node = path[-1]
+            # If it's not visited:
+            if node not in visited:
+                neighbors = self.get_neighbors(node)
+
+                for neighbor in neighbors:
+                    new_path = list(path)
+                    new_path.append(neighbor)
+                    q.enqueue(new_path)
+                   # return path if neighbour is goal
+                    if neighbor is destination_vertex_id:
+                        return new_path
+                # mark visited
+                visited.add(node)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
