@@ -3,9 +3,11 @@ Simple graph implementation
 """
 from util import Stack, Queue  # These may come in handy
 
+
 class Graph:
 
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
+
     def __init__(self):
         self.vertices = {}
 
@@ -13,33 +15,89 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        self.vertices[vertex_id] = set()  # set of edges
 
     def add_edge(self, v1, v2):
+        """add edge from v1 to v2."""
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        # if they're both in the graph
+        if v1 in self.vertices and v2 in self.vertices:
+            self.vertices[v1].add(v2)
+        else:
+            raise IndexError("Vertex does not exist in graph")
 
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        return self.vertices[vertex_id]
 
-    def bft(self, starting_vertex):
+    def bft(self, starting_vertex_id):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
-        """
-        pass  # TODO
 
-    def dft(self, starting_vertex):
+        Breadth-First Traversal
+        Add starting node to a queue
+        While queue isn't empty:
+            Dequeue the first vert
+            If that vert isn't visited:
+                Mark as visited
+                Add all its unvisited neighbors to the queue
+
+        """
+
+        q = Queue()
+        q.enqueue(starting_vertex_id)
+
+        # Keep track of visited nodes
+        visited = set()
+        # Repeat until queue is empty
+        while q.size() > 0:
+            # Dequeue first vert
+            v = q.dequeue()
+            # If it's not visited:
+            if v not in visited:
+                print(v)
+                # mark visited
+                visited.add(v)
+
+                for next_vert in self.get_neighbors(v):
+                    q.enqueue(next_vert)
+
+    def dft(self, starting_vertex_id):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
+
+        Depth-First Traversal
+        Add starting node to a stack
+        While stack isn't empty:
+            Pop the first vert
+            If that vert isn't visited:
+                Mark as visited
+                Push all its unvisited neighbors to the stack
         """
-        pass  # TODO
+
+        s = Stack()
+        s.push(starting_vertex_id)
+
+        # Keep track of visited nodes
+        visited = set()
+        # Repeat until queue is empty
+        while s.size() > 0:
+            # Dequeue first vert
+            v = s.pop()
+            # If it's not visited:
+            if v not in visited:
+                print(v)
+                # mark visited
+                visited.add(v)
+
+                for next_vert in self.get_neighbors(v):
+                    s.push(next_vert)
 
     def dft_recursive(self, starting_vertex):
         """
@@ -75,6 +133,7 @@ class Graph:
         This should be done using recursion.
         """
         pass  # TODO
+
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
