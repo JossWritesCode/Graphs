@@ -119,7 +119,7 @@ class Graph:
         breath-first order.
         """
         q = Queue()
-        q.enqueue(starting_vertex_id)
+        q.enqueue([starting_vertex_id])
 
         # Keep track of visited nodes
         visited = set()
@@ -130,21 +130,24 @@ class Graph:
         # Repeat until queue is empty
         while q.size() > 0:
             # Dequeue first vert
-            path = [q.dequeue()]
+            path = q.dequeue()
             node = path[-1]
+            print(node, "node")
             # If it's not visited:
             if node not in visited:
                 neighbors = self.get_neighbors(node)
-
+                print(node, "node")
                 for neighbor in neighbors:
                     new_path = list(path)
                     new_path.append(neighbor)
                     q.enqueue(new_path)
+                    print(node, "node")
+
                    # return path if neighbour is goal
                     if neighbor is destination_vertex_id:
                         return new_path
-                # mark visited
                 visited.add(node)
+                # mark visited
 
     def dfs(self, starting_vertex, destination_vertex):
         """
