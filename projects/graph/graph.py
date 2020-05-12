@@ -149,13 +149,42 @@ class Graph:
                 visited.add(node)
                 # mark visited
 
-    def dfs(self, starting_vertex, destination_vertex):
+    def dfs(self, starting_vertex_id, destination_vertex_id):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        s = Stack()
+        s.push([starting_vertex_id])
+
+        # Keep track of visited nodes
+        visited = set()
+
+        if starting_vertex_id is destination_vertex_id:
+            return starting_vertex_id
+
+        # Repeat until queue is empty
+        while s.size() > 0:
+            # Dequeue first vert
+            path = s.pop()
+            node = path[-1]
+            print(node, "node")
+            # If it's not visited:
+            if node not in visited:
+                neighbors = self.get_neighbors(node)
+                print(node, "node")
+                for neighbor in neighbors:
+                    new_path = list(path)
+                    new_path.append(neighbor)
+                    s.push(new_path)
+                    print(node, "node")
+
+                   # return path if neighbour is goal
+                    if neighbor is destination_vertex_id:
+                        return new_path
+                visited.add(node)
+                # mark visited
 
     def dfs_recursive(self, starting_vertex, destination_vertex):
         """
