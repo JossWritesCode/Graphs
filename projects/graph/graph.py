@@ -186,15 +186,29 @@ class Graph:
                 visited.add(node)
                 # mark visited
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
-        """
-        Return a list containing a path from
-        starting_vertex to destination_vertex in
-        depth-first order.
+    def dfs_recursive(self, start_vert, target_value, visited=None, path=None):
+        print(start_vert)
 
-        This should be done using recursion.
-        """
-        pass  # TODO
+        if visited is None:
+            visited = set()
+
+        if path is None:
+            path = []
+
+        visited.add(start_vert)
+
+        path = path + [start_vert]
+
+        if start_vert is target_value:
+            return path
+
+        for child_vert in self.vertices[start_vert]:
+            if child_vert not in visited:
+                new_path = self.dfs_recursive(
+                    child_vert, target_value, visited, path)
+                if new_path:
+                    return new_path
+        return None
 
 
 if __name__ == '__main__':
