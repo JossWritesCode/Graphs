@@ -12,7 +12,6 @@ class Graph:
         self.vertices = {}
 
     def create_graph(self, data):
-
         for tuple in data:
             for element in tuple:
                 if element not in self.vertices:
